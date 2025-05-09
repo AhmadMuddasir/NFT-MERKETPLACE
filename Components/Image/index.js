@@ -4,6 +4,7 @@ import img3 from "./3.jpg";
 import img4 from "./4.jpg";
 import img5 from "./5.jpg";
 import img6 from "./6.jpg";
+import img21 from "./21.jpg"
 
 //ICON
 import search from "./Search.png";
@@ -19,4 +20,5 @@ export default {
   //ICONS
   search,
   arrow,
+  img21
 };
