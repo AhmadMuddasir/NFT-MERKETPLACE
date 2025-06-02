@@ -8,6 +8,12 @@ body{
      margin: 0;
      margin-block: 3rem;
 }
+hr{
+     background: linear-gradient(-5deg,rgb(217, 155, 40) 0%,rgb(246, 6, 46) 100%);
+     font-size: bold;
+     height: 1px;
+     margin-top: 10px;
+}
 
 .header{
      margin-bottom: 2rem;

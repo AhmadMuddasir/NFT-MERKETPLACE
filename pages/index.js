@@ -23,7 +23,7 @@ const Index = () => {
     disconnect,
     contract,
     connect,
-    userBalance, // Fixed typo: userBlance -> userBalance
+    userBalance,
     uploadImage,
     getUploadedImages,
     setLoading,
@@ -31,7 +31,7 @@ const Index = () => {
     getAllNFTsAPI,
   } = useStateContext();
 
-  const [openProfile, setOpenProfile] = useState(false);
+  const[openProfile, setOpenProfile] = useState(false);
   const [closeForm, setCloseForm] = useState(true);
   const [file, setFile] = useState(null);
   const [display, setDisplay] = useState(null);
@@ -49,22 +49,19 @@ const Index = () => {
     image: "",
   });
 
-  // Initialize oldImages as a state to avoid mutating it in render
   const [oldImages, setOldImages] = useState([]);
 
-  // Fetch images only when necessary
   const fetchImages = async () => {
     try {
       setIsLoading(true);
       const images = await getUploadedImages();
       const newImages = Array.isArray(images) ? images : [];
       setAllImages(newImages);
-      setImagesCopy(newImages); // Initialize imagesCopy
-      setOldImages(newImages); // Initialize oldImages as a copy
+      setImagesCopy(newImages);
+      setOldImages(newImages); 
 
       // Fetch API NFTs
       const apiImages = await getAllNFTsAPI();
-      // Note: You may want to merge apiImages with newImages if needed
     } catch (error) {
       console.error("Error fetching images:", error);
       setNotification("Failed to load images");
@@ -95,7 +92,6 @@ const Index = () => {
 
     setCloseForm(false);
     setLoading(true);
-
     try {
       const formData = new FormData();
       formData.append("file", file);

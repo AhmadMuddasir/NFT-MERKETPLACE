@@ -14,7 +14,7 @@ export const StateContextProvider = ({ children }) => {
   const [signer, setSigner] = useState(null);
   const [contract, setContract] = useState(null);
   const [address, setAddress] = useState(null);
-  const [userBlance, setUserBalance] = useState();
+  const [userBalance, setUserBalance] = useState();
   const [loading, setLoading] = useState(false);
 
   // Initialize ethers provider and contract
@@ -181,40 +181,55 @@ useEffect(() => {
   };
 
   // Get single image
-  const singleImage = async (id) => {
-    try {
-      const data = await contract.getImage(id);
-      const image = {
-        title: data[0],
-        description: data[1],
-        email: data[2],
-        category: data[3],
-        fundraised: ethers.utils.formatEther(data[4].toString()),
-        creator: data[5],
-        imageURL: data[6],
-        createdAt: data[7].toNumber(),
-        imageId: data[8].toNumber(),
-      };
-      return image;
-    } catch (error) {
-      console.error("Error fetching single image:", error);
+const singleImage = async (id) => {
+  try {
+    // Validate ID
+    if (isNaN(id) || id <= 0) {
+      throw new Error("Invalid image ID");
     }
-  };
+
+    const data = await contract.getImage(id);
+    const image = {
+      title: data[0],
+      description: data[1],
+      email: data[2],
+      category: data[3],
+      fundraised: ethers.utils.formatEther(data[4].toString()),
+      creator: data[5],
+      imageURL: data[6],
+      createdAt: data[7].toNumber(),
+      imageId: data[8].toNumber(),
+    };
+    return image;
+  } catch (error) {
+    console.error("Error fetching single image:", error);
+    throw error; // Re-throw to handle in component
+  }
+};
 
   // Donate
-  const donateFund = async ({ amount, id }) => {
-    try {
-      const tx = await contract.donateToImage(id, {
-        value: ethers.utils.parseEther(amount.toString()),
-      });
-      await tx.wait();
-      console.log("Donation successful:", tx);
-      window.location.reload();
-    } catch (error) {
-      console.error("Error donating:", error);
+const donateFund = async ({ amount, id }) => {
+  try {
+    // Convert to number first for validation
+    const amountNum = Number(amount);
+    if (isNaN(amountNum) || amountNum < 0.025) {
+      throw new Error("Minimum donation is 0.025 ETH");
     }
-  };
 
+    const amountInWei = ethers.utils.parseEther(amountNum.toString());
+    const tx = await contract.donateToImage(id, {
+      value: amountInWei
+    });
+    
+    await tx.wait();
+    setNotification(`Donated ${amountNum} ETH successfully!`);
+    return true;
+  } catch (error) {
+    console.error("Donation error:", error);
+    setNotification(`Donation failed: ${error.message}`);
+    throw error;
+  }
+};
   // Get API data
   const getAllNFTsAPI = async () => {
     try {
@@ -242,6 +257,8 @@ useEffect(() => {
     }
   };
 
+
+
   return (
     <StateContext.Provider
       value={{
@@ -249,7 +266,7 @@ useEffect(() => {
         contract,
         connect,
         disconnect,
-        userBlance,
+        userBalance,
         setLoading,
         loading,
         uploadImage,
@@ -258,6 +275,7 @@ useEffect(() => {
         singleImage,
         getAllNFTsAPI,
         getSingleNftsAPI,
+        
       }}
     >
       {children}

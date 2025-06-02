@@ -43,7 +43,8 @@ const Product = ({
             </p>
             <p className={style.info}>
               <span>
-                Donation:{""} {image?.fundRaised} ZKsync Sepolia
+                Donation:{""} {image?.fundraised}  Sepolia
+
               </span>{" "}
             </p>
             <p>Contract Creator:{image?.email}</p>
@@ -67,49 +68,57 @@ const Product = ({
             </span>
           </div>
           <div className={style.button_column}>
-          <button
-            className={BTNStyle.button}
-            onClick={() => (
-              setNotification("Image URL successfully copied"),
+            <button
+              className={BTNStyle.button}
+              onClick={() => (
+                setNotification("Image URL successfully copied"),
                 navigator.clipboard.writeText(image?.imageURL)
-  )}
-          >
-            <span className={`${BTNStyle.button_content} ${style.btn}`}>
-              Copy URL{" "}
-            </span>
-          </button>
-          {/* Download */}
-          <span className={style.space}></span>
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(
-                setNotification("Thanks for downloading")
-              );
-            }}
-            className={BTNStyle.button}
-          >
-            <span
-              onClick={handleClick}
-              className={`${BTNStyle.button_content} ${style.btn}`}
+              )}
             >
-              Download Image{" "}
-            </span>
-          </button>
-          {/* Donate */}
-          <span className={style.space}></span>
-          <button className={BTNStyle.button} onClick={() => setDonate(true)}>
-            <span className={`${style.button_content} ${style.btn}`}>Donate</span>
-          </button>
-        </div>
+              <span className={`${BTNStyle.button_content} ${style.btn}`}>
+                Copy URL{" "}
+              </span>
+            </button>
+            {/* Download */}
+            <span className={style.space}></span>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  setNotification("Thanks for downloading")
+                );
+              }}
+              className={BTNStyle.button}
+            >
+              <span
+                onClick={handleClick}
+                className={`${BTNStyle.button_content} ${style.btn}`}
+              >
+                Download Image{" "}
+              </span>
+            </button>
+            {/* Donate */}
+            <span className={style.space}></span>
+            <button
+              className={BTNStyle.button}
+              onClick={() => {
+              
+                setDonate(true);
+              }}
+            >
+              <span className={`${style.button_content} ${style.btn}`}>
+                Donate
+              </span>
+            </button>
+          </div>
         </div>
         {donate && (
           <div className="form">
             <div className="form_inner">
               <Donate
-              setLoading={setLoading}
-              donateAmount={donateAmount}
-              setDonate={setDonate}
-              setSupport={setSupport}
+                setLoading={setLoading}
+                donateAmount={donateAmount}
+                setDonate={setDonate}
+                setSupport={setSupport}
               />
             </div>
           </div>
