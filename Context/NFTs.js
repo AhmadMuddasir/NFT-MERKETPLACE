@@ -21,6 +21,7 @@ export const StateContextProvider = ({ children }) => {
   const initializeEthers = async () => {
     try {
       if (window.ethereum) {
+        // const provider = new ethers.providers.Web3Provider(window.ethereum);
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(contractAddress, contractABI.abi, signer);
@@ -109,7 +110,6 @@ useEffect(() => {
   const uploadImage = async (ImageInfo) => {
     const { title, description, email, category, image } = ImageInfo;
     try {
-      console.log("1 line 105 NFTs")
       setLoading(true);
       const listingPrice = await contract.listingPrice();
       const tx = await contract.uploadIPFS(
@@ -123,12 +123,10 @@ useEffect(() => {
           value: listingPrice,
         }
       );
-      console.log("2 line 120")
 
       await tx.wait();
 
       // Store data in the API
-      console.log("3 line 124");
 
       const response = await axios({
         method: "POST",
@@ -141,6 +139,7 @@ useEffect(() => {
           email,
         },
       });
+      
       console.log(response);
       console.info("Contract call successful", tx);
       setLoading(false);

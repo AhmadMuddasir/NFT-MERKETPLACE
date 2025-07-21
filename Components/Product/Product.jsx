@@ -28,6 +28,7 @@ const Product = ({
       <div className={style.product}>
         <div className={style.image}>
           <img src={image?.imageURL} alt="img" className={style.image_img} />
+          {console.log("images ",image?.imageURL)}
         </div>
         <div className={style.detail}>
           <div className={style.detail_box}>

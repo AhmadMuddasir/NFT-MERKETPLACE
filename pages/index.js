@@ -126,7 +126,7 @@ const Index = () => {
         image: "",
       });
       setCategory("");
-      fetchImages(); // Refresh images after upload
+      fetchImages(); 
     } catch (error) {
       console.error("Error uploading image:", error);
       setNotification("Failed to upload image");
@@ -208,8 +208,10 @@ const Index = () => {
             oldImages={oldImages}
             activeSelect={activeSelect}
             setActiveSelect={setActiveSelect}
-          />
+            />
+            
           <div className="card">
+            
             {allImages.map((image, i) => (
               <Card
                 key={i} // Use index as key (consider using image.id if available)

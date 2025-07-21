@@ -37,7 +37,7 @@ const Form = ({
           >
             <Lock styleClass={style.input_icon}/>
             <textarea type="description"  
-            className={`${style.input_field} ${style.input_field}`}
+            className={`${style.input_field} `}
             placeholder="description"
             onChange={(e)=> handleFormFieldChange("description",e)}
             

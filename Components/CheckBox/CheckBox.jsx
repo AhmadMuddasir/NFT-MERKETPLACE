@@ -8,8 +8,9 @@ const CheckBox = ({category,setCategory}) => {
     onClick={()=>{setCategory(category)}}
     >
       <input type="checkbox"/>
-      <span className={style.checkmark}></span>
+      <span className={style.checkmark}>
       {category}
+      </span>
     </label>
   )
 };
